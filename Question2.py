@@ -10,7 +10,9 @@ import pandas as pd
 data_url=""
 while True:
     response = requests.get(data_url)
-    dict = {"temperature": response[temperature],"humidity": response[humidity]}
-    data= pd.DataFrame(dict)
-    weather_data=weather_data.append(data)
-    
+    data = response.json()
+    temp = data['temp']
+    humidity = data['humidity']
+    with open('weather.csv', 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow([temp, humidity])
